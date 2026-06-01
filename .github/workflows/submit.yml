@@ -1,0 +1,21 @@
+name: Submit B12 Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set repository URL
+        run: echo "GITHUB_REPOSITORY_URL=https://github.com/${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+
+      - name: Run application submission script
+        env:
+          B12_SIGNING_SECRET: ${{ secrets.B12_SIGNING_SECRET }}
+        run: python submit_application.py
+
